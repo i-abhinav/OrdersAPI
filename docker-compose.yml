@@ -1,0 +1,45 @@
+version: "3.2"
+services:
+  php:
+    build: 
+      context: './docker-assets/php/'
+    networks:
+      - backend
+    volumes:
+      - ./src:/var/www/html/
+    container_name: ${APP_NAME}_php
+  apache:
+    build:
+      context: './docker-assets/apache/'
+    depends_on:
+      - php
+      - mysql
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html/
+    container_name: ${APP_NAME}_apache
+  mysql:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - "3307:3306"
+    dns_search: mysql
+    volumes:
+      - data:/var/lib/mysql
+    networks:
+      - backend
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    container_name: ${APP_NAME}_mysql
+networks:
+  frontend:
+  backend:
+volumes:
+    data:
