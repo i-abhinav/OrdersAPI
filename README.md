@@ -98,7 +98,7 @@ php -S localhost:8080 -t public
 
 ## Code-coverage - go to below URL
 
-`http://localhost:8080/code-covergae/`
+`http://localhost:8080/code-coverage/`
 
 
 #### Running Test cases...
