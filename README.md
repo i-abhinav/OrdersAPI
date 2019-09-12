@@ -43,7 +43,7 @@ GOOGLE_MAP_KEY=
 4). Now open Command Line And Run start.sh shell script **
 
 ``` bash
-bash start.
+bash start.sh
 
 OR
 
