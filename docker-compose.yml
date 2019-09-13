@@ -8,13 +8,13 @@ services:
     volumes:
       - ./src:/var/www/html/
     env_file:
-     - ".envdocker"
+     - .envdocker
     container_name: ${APP_NAME}_php
   apache:
     build:
       context: './docker-assets/apache/'
     env_file:
-     - ".envdocker"
+     - .envdocker
     depends_on:
       - php
       - mysql
@@ -29,7 +29,7 @@ services:
   mysql:
     image: mysql:5.7
     env_file:
-     - ".envdocker"
+     - .envdocker
     restart: always
     ports:
       - "3307:3306"
