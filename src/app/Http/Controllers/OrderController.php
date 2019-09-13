@@ -36,15 +36,6 @@ class OrderController extends Controller
         $this->order = $order;
     }
 
-/**
- * @var int, Default Order-List Limit
- */
-    protected $defaultLimit = 5;
-
-/**
- * @var int, Default Order-List Page
- */
-    protected $defaultPage = 1;
 
 /**
  * Create a new Order
@@ -248,12 +239,12 @@ class OrderController extends Controller
             return response()->json(['error' => $validationResponse['errors']], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $limit = $request->get('limit') ?: $this->defaultLimit;
-        $page = $request->get('page') ?: $this->defaultPage;
+        $limit = $request->get('limit');
+        $page = $request->get('page');
 
         $orders = $this->order->list($page, $limit);
         // to fetch only data
-        return response()->json($orders->items(), JsonResponse::HTTP_OK);
+        return response()->json($orders, JsonResponse::HTTP_OK);
     }
 
 }

@@ -40,7 +40,6 @@ class GoogleDistanceMatrix
 
             $distance = $content['rows'][0]['elements'][0]['distance']['value']; // in meters
             return $distance;
-            //   $distance = $content['rows'][0]['elements'][0]['distance']['text'];    // in Km
         } catch (RequestException $ex) {
             abort(JsonResponse::HTTP_NOT_FOUND, Messages::get('errors.guzzle'));
         }

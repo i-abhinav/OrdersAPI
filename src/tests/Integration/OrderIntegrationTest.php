@@ -108,7 +108,7 @@ class OrderIntegrationTest extends TestCase
                     $this->assertArrayHasKey('status', (array) $array);
                 }
                 $this->assertCount(
-                    $expectedCount = 5,
+                    $expectededCount = 5,
                     $data, "Response array contains 5 elements"
                 );
                 break;
@@ -128,8 +128,8 @@ class OrderIntegrationTest extends TestCase
 /** @test */
     public function OrderCreateWithValidScenario()
     {
-        echo "\n ### Starting Integration Test Cases ### \n";
-        echo "\n \t - ### Test case for INSERTING ORDER with Valid Parameters ###";
+        echo "\n <<<<<< Starting Integration Test Cases >>>>>> \n";
+        echo "\n \t - ### Test case for INSERTING ORDER with Valid Scenario ###";
         $validData = FakeData::validCoordinates();
         $this->_checkOrderCreateAssert($validData, $desiredCode = 200); //success
     }
@@ -137,41 +137,42 @@ class OrderIntegrationTest extends TestCase
 /** @test */
     public function OrderCreateWithInvalidScenario()
     {
-        echo "\n \t - ### Test case for INSERTING ORDER with Invalid Parameters ###";
+        echo "\n \t - ### Test case for INSERTING ORDER ----> Negative Test Cases ###";
 
-        echo "\n ** Scenario(1). Empty Request Body **";
+        echo "\n ** Scenario(1). Empty Request Body ---> Expected Response Code(400) **";
         $this->_checkOrderCreateAssert($invalidData = [], $desiredCode = 400); //fail
 
         $invalidData = FakeData::invalidLongitude();
-        echo "\n ** Scenario(2). Invalid Longitude **";
+        echo "\n ** Scenario(2). Invalid Longitude ---> Expected Response Code(422) **";
         $this->_checkOrderCreateAssert($invalidData, $desiredCode = 422); //validation error
 
         $invalidData = FakeData::invalidLatitude();
-        echo "\n ** Scenario(3). Invalid Latitude **";
+        echo "\n ** Scenario(3). Invalid Latitude ---> Expected Response Code(422) **";
         $this->_checkOrderCreateAssert($invalidData, $desiredCode = 422); //validation error
 
         $invalidData = FakeData::emptyLatitude();
-        echo "\n ** Scenario(4). Empty Latitude **";
+        echo "\n ** Scenario(4). Empty Latitude ---> Expected Response Code(422) **";
         $this->_checkOrderCreateAssert($invalidData, $desiredCode = 422); //validation error
 
         $invalidData = FakeData::emptyLongitude();
-        echo "\n ** Scenario(5). Empty Longitude **";
+        echo "\n ** Scenario(5). Empty Longitude ---> Expected Response Code(422) **";
         $this->_checkOrderCreateAssert($invalidData, $desiredCode = 422); //validation error
 
         $invalidData = FakeData::invalidFormatLatitude();
-        echo "\n ** Scenario(6). Invalid Format - not string **";
+        echo "\n ** Scenario(6). Invalid Format - not string ---> Expected Response Code(422) **";
         $this->_checkOrderCreateAssert($invalidData, $desiredCode = 422); //validation error
 
         $invalidData = FakeData::invalidNumberOfParams();
-        echo "\n ** Scenario(7). Invalid Number of Parameters **";
+        echo "\n ** Scenario(7). Invalid Number of Parameters ---> Expected Response Code(422) **";
         $this->_checkOrderCreateAssert($invalidData, $desiredCode = 422); //validation error
 
         $invalidData = FakeData::invalidKeys();
-        echo "\n ** Scenario(8). Spelling mistake **";
+        echo "\n ** Scenario(8). Spelling mistake ---> Expected Response Code(422) **";
         $this->_checkOrderCreateAssert($invalidData, $desiredCode = 422); //validation error
 
         $sameCoordiates = FakeData::sameCoordiates();
         echo "\n ** Scenario(9). If Origin and Destination Co-ordinates are same **";
+        echo "\n ---> Expected Response Code(422)";
         $this->_checkOrderCreateAssert($sameCoordiates, $desiredCode = 422); //validation error
 
     }
@@ -192,42 +193,42 @@ class OrderIntegrationTest extends TestCase
 /** @test */
     public function OrderUpdateWithInvalidScenario()
     {
-        echo "\n \t - ### Test case for UPDATING ORDER with Invalid Parameters ###";
-        echo "\n ** Scenario(1). Invalid Request **";
+        echo "\n \t - ### Test case for UPDATING ORDER ----> Negative Test Cases ###";
+        echo "\n ** Scenario(1). Invalid Request ---> Expected Response Code(422) **";
 
         $validRequestBody = ['status' => 'TAKEN'];
         $this->_checkOrderUpdateAssert($orderID = 4, $requestBody = [], $desiredCode = 422); //fail
 
-        echo "\n ** Scenario(2). Empty Order ID **";
+        echo "\n ** Scenario(2). Empty Order ID ---> Expected Response Code(422) **";
         $this->_checkOrderUpdateAssert($orderID = null, $validRequestBody, $desiredCode = 405); //fail
 
-        echo "\n ** Scenario(3). Invalid format - Order Id **";
+        echo "\n ** Scenario(3). Invalid format - Order Id ---> Expected Response Code(422) **";
         $this->_checkOrderUpdateAssert($orderID = '12dsd', $validRequestBody, $desiredCode = 422); //fail
 
-        echo "\n ** Scenario(4). Negative Order ID **";
+        echo "\n ** Scenario(4). Negative Order ID ---> Expected Response Code(422) **";
         $this->_checkOrderUpdateAssert($orderID = -4, $validRequestBody, $desiredCode = 422); //fail
 
-        echo "\n ** Scenario(5). Spelling Mistake - param value **";
+        echo "\n ** Scenario(5). Spelling Mistake - param value ---> Expected Response Code(422) **";
         $invalidRequestBody = ['status' => 'TAKENN'];
         $this->_checkOrderUpdateAssert($orderID, $invalidRequestBody, $desiredCode = 422); //fail
 
-        echo "\n ** Scenario(6). Invalide request param key **";
+        echo "\n ** Scenario(6). Invalide request param key ---> Expected Response Code(422) **";
         $invalidRequestBody = ['statuss' => 'TAKEN'];
         $this->_checkOrderUpdateAssert($orderID, $invalidRequestBody, $desiredCode = 422); //fail
 
-        echo "\n ** Scenario(7). Empty Param value **";
+        echo "\n ** Scenario(7). Empty Param value ---> Expected Response Code(422) **";
         $invalidRequestBody = ['status' => ''];
         $this->_checkOrderUpdateAssert($orderID, $invalidRequestBody, $desiredCode = 422); //fail
 
-        echo "\n ** Scenario(8). Invalid format **";
+        echo "\n ** Scenario(8). Invalid format ---> Expected Response Code(422) **";
         $invalidRequestBody = ['status' => 1234897239];
         $this->_checkOrderUpdateAssert($orderID, $invalidRequestBody, $desiredCode = 422); //fail
 
-        echo "\n ** Scenario(9). Update already Taken Order - Conflict **";
-        $this->_checkOrderUpdateAssert($orderID = 3, $validRequestBody, $desiredCode = 409); //
+        echo "\n ** Scenario(9). Update already Taken Order - Conflict ---> Expected Response Code(409) **";
+        $this->_checkOrderUpdateAssert($orderID = 3, $validRequestBody, $desiredCode = 409); // conflict
 
-        echo "\n ** Scenario(10). Order ID not exist in Database **";
-        $this->_checkOrderUpdateAssert($orderID = 12321423143, $validRequestBody, $desiredCode = 404); //
+        echo "\n ** Scenario(10). Order ID not exist in Database ---> Expected Response Code(404) **";
+        $this->_checkOrderUpdateAssert($orderID = 12321423143, $validRequestBody, $desiredCode = 404); // not found
 
     }
 
@@ -235,60 +236,59 @@ class OrderIntegrationTest extends TestCase
     public function OrderListWithValidScenario()
     {
         echo "\n \t - ### Test case for LISTING ORDER with Valid scenario ###";
-
-        echo "\n ** Scenario(1). Empty query **";
-        $query = '';
-        $this->_checkOrderListingAssert($query, $desiredCode = 422);
-
-        echo "\n ** Scenario(2). With query **";
+        
         $query = 'page=1&limit=5';
         $this->_checkOrderListingAssert($query, $desiredCode = 200);
-
+        
     }
-
-/** @test */
+    
+    /** @test */
     public function OrderListWithInvalidScenario()
     {
-        echo "\n \t - ### Test case for LISTING ORDER with Invalid scenario ###";
-
-        echo "\n ** Scenario(1). Invalid Request Params - Page **";
+        echo "\n \t - ### Test case for LISTING ORDER ----> Negative Test Cases ###";
+        
+        echo "\n ** Scenario(1). Invalid Request Param (Page) ---> Expected Response Code(422) **";
         $query = 'page44=1&limit=5';
         $this->_checkOrderListingAssert($query, $desiredCode = 422);
-
-        echo "\n ** Scenario(2). Invalid Request Params - Spelling Mistake Page **";
+        
+        echo "\n ** Scenario(2). Spelling Mistake (Page) ---> Expected Response Code(422)  **";
         $query = 'paage=1&limit=5';
         // it will gives result set beacuse page and limit are optional
         $this->_checkOrderListingAssert($query, $desiredCode = 422);
-
-        echo "\n ** Scenario(3). Invalid Request Params - Page zero value **";
+        
+        echo "\n ** Scenario(3). Zero value (Page) ---> Expected Response Code(422)  **";
         $query = 'page=0&limit=5';
         $this->_checkOrderListingAssert($query, $desiredCode = 422);
-
-        echo "\n ** Scenario(4). Invalid Request Params - Page negative value**";
+        
+        echo "\n ** Scenario(4). Negative value (Page) ---> Expected Response Code(422)  **";
         $query = 'page=-2&limit=5';
         $this->_checkOrderListingAssert($query, $desiredCode = 422);
-
-        echo "\n ** Scenario(5). Invalid Request Params - Limit Spelling Mistake **";
+        
+        echo "\n ** Scenario(5). Spelling Mistake (Limit) ---> Expected Response Code(422)  **";
         $query = 'page=1&limmit=5';
         // it will gives result set beacuse page and limit are optional
         $this->_checkOrderListingAssert($query, $desiredCode = 422);
-
-        echo "\n ** Scenario(6). Invalid Request Params - Limit zero value **";
+        
+        echo "\n ** Scenario(6). Zero value (Limit) ---> Expected Response Code(422)  **";
         $query = 'page=1&limit=0';
         $this->_checkOrderListingAssert($query, $desiredCode = 422);
-
-        echo "\n ** Scenario(7). Invalid Request Params - Limit negative value **";
+        
+        echo "\n ** Scenario(7). Negative value (Limit) ---> Expected Response Code(422)  **";
         $query = 'page=1&limit=-5';
         $this->_checkOrderListingAssert($query, $desiredCode = 422);
-
-        echo "\n ** Scenario(8). Invalid Request Params - Limit **";
+        
+        echo "\n ** Scenario(8). Invalid Request Param - Limit ---> Expected Response Code(422)  **";
         $query = 'page=1&limit231=5';
         $this->_checkOrderListingAssert($query, $desiredCode = 422);
-
-        echo "\n ** Scenario(9). Exceeding - Limit, greater than 1000 **";
+        
+        echo "\n ** Scenario(9). Exceeding - Limit, greater than 1000 ---> Expected Response Code(422)  **";
         $query = 'page=1&limit=1001';
         $this->_checkOrderListingAssert($query, $desiredCode = 422);
 
+        echo "\n ** Scenario(10). Empty query string ---> Expected Response Code(422) **";
+        $query = '';
+        $this->_checkOrderListingAssert($query, $desiredCode = 422);
+        
     }
-
+    
 }

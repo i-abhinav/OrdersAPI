@@ -12,7 +12,8 @@ class OrderEloquentRepository implements OrderRepositoryInterface
 
     function list($page, $limit) {
         $ordersList = Order::select('id', 'distance', 'status')->paginate($limit);
-        return $ordersList->appends(['limit' => $limit, 'page' => $page]);
+        $ordersList->appends(['limit' => $limit, 'page' => $page]);
+        return $ordersList->items();
     }
 
     public function take($id)
