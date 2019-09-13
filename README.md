@@ -1,4 +1,4 @@
-# MyOrderAPI
+# Orders Managemnet API
 This is REST API for creating a new order, updating a order and get order list.
 
 ## Tech Stack used...
@@ -38,51 +38,10 @@ OR
 ./start.sh
 ```
 
-## How to Use (Without Docker and start.sh script - Run Application Manually)
-### *NOTES: Before run manually, it assumes that PHP, MySQL and Composer are pre-installed in your system.
-
-1). Clone GIT repository in your desired directory..
-
-``` bash
-git clone https://github.com/i-abhinav/OrdersAPI.git
-```
-
-2).  Open .env file, Please change environment credentials in .env file according to your Database environment.
-
-**.env**
-``` bash
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=YOUR_DBNAME
-DB_USERNAME=YOUR_DB_USERNAME
-DB_PASSWORD=YOUR_DB_PASSWORD
-
-GOOGLE_MAP_KEY=
-```
-
-3). Set Google Map API key in .env file
-
-``` bash
-GOOGLE_MAP_KEY=
-```
-
-4). Now open Command Line and got to project directory and Run below commands in CLI**
-
-``` bash
-cd REPOSITORY_NAME_PATH
-composer update
-php artisan migrate
-php artisan db:seed
-php -S localhost:8080 -t public
-```
-
-
-
 ## Swagger OpenAPI 3.0 integration
 
-1. Open URL `http://localhost:8080/swagger/` for API documenatation
-2. You can perform GET, POST AND PATCH /order API
+1. Open URL `http://localhost:8080/swagger/` for Swagger API documenatation
+2. You can perform GET, POST AND PATCH /orders Request
 
 ## Code-coverage - go to below URL
 
@@ -96,31 +55,18 @@ With Docker
 ``` bash
 docker exec myorders_php ./vendor/bin/phpunit
 ```
-Without Docker
-``` bash
-./vendor/bin/phpunit
-```
 
 ## To Perform Unit test cases
 With Docker
 ``` bash
 docker exec myorders_php ./vendor/bin/phpunit ./tests/Unit
 ```
-Without Docker
-``` bash
-./vendor/bin/phpunit ./tests/Integration
-```
-
 
 
 ## To Perform Integration test cases
 With Docker
 ``` bash
-docker exec myorders_php ./vendor/bin/phpunit ./tests/Unit
-```
-Without Docker
-``` bash
-./vendor/bin/phpunit ./tests/Integration
+docker exec myorders_php ./vendor/bin/phpunit ./tests/Integration
 ```
 
 ## Api Endpoint Reference Documentation
