@@ -240,8 +240,8 @@ class OrderController extends Controller
             return response()->json(['error' => $validationResponse['errors']], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $limit = (int)$request->get('limit');
-        $page = (int)$request->get('page');
+        $limit = (int) $request->get('limit');
+        $page = (int) $request->get('page');
 
         $orders = $this->order->list($page, $limit);
         return response()->json($orders, JsonResponse::HTTP_OK);

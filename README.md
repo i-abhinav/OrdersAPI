@@ -23,7 +23,7 @@ git clone https://github.com/i-abhinav/OrdersAPI.git
 
 2). Open .env file under src folder and Set Google MAP API key.
 
-**.env**
+**src/.env**
 ``` bash
 GOOGLE_MAP_KEY=
 ```
@@ -41,7 +41,7 @@ OR
 ## Swagger OpenAPI 3.0 integration
 
 1. Open URL `http://localhost:8080/swagger/` for Swagger API documenatation
-2. You can perform GET, POST AND PATCH /orders Request
+2. You can perform GET, POST and PATCH /orders Request
 
 ## Code-coverage - go to below URL
 
@@ -211,6 +211,7 @@ docker exec myorders_php ./vendor/bin/phpunit ./tests/Integration
 
 - For Docker Implementation get help from
 (https://github.com/laravel-101/Laravel-Docker-Template)
+(https://cis.gvsu.edu/~dulimarh/jkl/php-mysql-docker/)
 
 - For Swagger Integartion get help from
 (https://github.com/DarkaOnLine/SwaggerLume)
