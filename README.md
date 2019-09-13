@@ -18,29 +18,17 @@ This is REST API for creating a new order, updating a order and get order list.
 1). Clone GIT repository in your desired directory..
 
 ``` bash
-git clone REPOSITORY
+git clone https://github.com/i-abhinav/OrdersAPI.git
 ```
 
-2). Check .env file, if you want to change environment credentials in .env file according to your environment
+2). Open .env file under src folder and Set Google MAP API key.
 
 **.env**
 ``` bash
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=YOUR_DBNAME
-DB_USERNAME=YOUR_DB_USERNAME
-DB_PASSWORD=YOUR_DB_PASSWORD
-
-GOOGLE_MAP_KEY=
-```
-3). Set Google Map API key in .env file
-
-``` bash
 GOOGLE_MAP_KEY=
 ```
 
-4). Now open Command Line And Run start.sh shell script **
+3). Now open Command Line And Run start.sh shell script **
 
 ``` bash
 bash start.sh
@@ -56,10 +44,10 @@ OR
 1). Clone GIT repository in your desired directory..
 
 ``` bash
-git clone REPOSITORY
+git clone https://github.com/i-abhinav/OrdersAPI.git
 ```
 
-2). Check .env file, if you want to change environment credentials in .env file according to your environment
+2).  Open .env file, Please change environment credentials in .env file according to your Database environment.
 
 **.env**
 ``` bash
@@ -82,7 +70,7 @@ GOOGLE_MAP_KEY=
 4). Now open Command Line and got to project directory and Run below commands in CLI**
 
 ``` bash
-cd REPO_NAME_PATH
+cd REPOSITORY_NAME_PATH
 composer update
 php artisan migrate
 php artisan db:seed

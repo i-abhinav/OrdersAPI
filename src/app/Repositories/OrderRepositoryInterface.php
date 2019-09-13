@@ -7,7 +7,7 @@ namespace App\Repositories;
 interface OrderRepositoryInterface
 {
 
-    function list($page, $limit);
+    public function list($page, $limit);
 
     public function create($input);
 

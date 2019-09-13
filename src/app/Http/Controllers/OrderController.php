@@ -6,7 +6,7 @@ use App\Helpers\GoogleDistanceMatrix;
 use App\Helpers\Messages;
 use App\Http\Validations\OrderValidator;
 use App\Models\Order;
-use App\Repositories\OrderRepositoryInterface as OrderRepo;
+use App\Repositories\OrderRepositoryInterface as OrderRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -30,12 +30,14 @@ class OrderController extends Controller
  */
     protected $order;
 
+    protected $googleDistanceHelper;
+
     // inject order eloquent interface repository to controller
-    public function __construct(OrderRepo $order)
+    public function __construct(OrderRepository $order, GoogleDistanceMatrix $googleDistanceHelper)
     {
         $this->order = $order;
+        $this->googleDistanceHelper = $googleDistanceHelper;
     }
-
 
 /**
  * Create a new Order
@@ -96,8 +98,7 @@ class OrderController extends Controller
         $origin = $request->get('origin');
         $destination = $request->get('destination');
 
-        $g = new GoogleDistanceMatrix();
-        $distance = $g->getMapDistance($origin, $destination);
+        $distance = $this->googleDistanceHelper->getMapDistance($origin, $destination);
 
         $inputs = [
             'origin_lat' => $origin[0],
@@ -182,7 +183,6 @@ class OrderController extends Controller
         $orderUpdate = $this->order->take($orderID);
         $response = $orderUpdate == 1 ? ['status' => Messages::get('orders.success')] : ['error' => Messages::get('orders.order_conflict')];
         $statusCode = $orderUpdate == 1 ? JsonResponse::HTTP_OK : JsonResponse::HTTP_CONFLICT;
-        // 409 ~conflict
         return response()->json($response, $statusCode);
     }
 
@@ -243,7 +243,6 @@ class OrderController extends Controller
         $page = $request->get('page');
 
         $orders = $this->order->list($page, $limit);
-        // to fetch only data
         return response()->json($orders, JsonResponse::HTTP_OK);
     }
 

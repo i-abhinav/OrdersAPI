@@ -4,8 +4,8 @@ namespace App\Helpers;
 
 use App\Exceptions\GoogleMapAPIException;
 use App\Helpers\Messages;
-use Illuminate\Http\JsonResponse;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\JsonResponse;
 
 class GoogleDistanceMatrix
 {
