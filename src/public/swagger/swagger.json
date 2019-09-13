@@ -11,20 +11,6 @@
     },
     "paths": {
         "/orders": {
-            "get": {
-                "tags": [
-                    "Order List"
-                ],
-                "summary": "Return Order List",
-                "description": "Returns Order id, status, disatnce List",
-                "operationId": "getOrderList",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            },
             "post": {
                 "tags": [
                     "Create New Order"
@@ -53,12 +39,12 @@
                                 "type": "object",
                                 "example": {
                                     "origin": [
-                                        "10",
-                                        "80"
+                                        "28.644800",
+                                        "77.308601"
                                     ],
                                     "destination": [
-                                        "83.232",
-                                        "145.3487"
+                                        "19.076090",
+                                        "72.877426"
                                     ]
                                 }
                             }
@@ -66,7 +52,7 @@
                     }
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "successful operation"
                     },
                     "400": {
@@ -121,13 +107,62 @@
                         "description": "Order successfully Taken"
                     },
                     "400": {
-                        "description": "Bad Request"
+                        "description": "BAD_REQUEST"
                     },
                     "409": {
-                        "description": "Conflict Order/Already Taken"
+                        "description": "CONFLICT_ORDER_ALREADY_TAKEN"
                     },
                     "422": {
-                        "description": "Invalid Parameters"
+                        "description": "INVALID_PARAMETERS"
+                    },
+                    "405": {
+                        "description": "METHOD_NOT_ALLOWED"
+                    }
+                }
+            }
+        },
+        "/orders?page=:page&limit=:limit": {
+            "get": {
+                "tags": [
+                    "Order List"
+                ],
+                "summary": "Return Order List",
+                "description": "Returns Order List data have order id, status, disatnce",
+                "operationId": "getOrderList",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Valid Page Number",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Valid Order Limit",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "BAD_REQUEST"
+                    },
+                    "422": {
+                        "description": "INVALID_PARAMETERS"
+                    },
+                    "405": {
+                        "description": "METHOD_NOT_ALLOWED"
                     }
                 }
             }

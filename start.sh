@@ -33,6 +33,6 @@ echo " $red <<<<<< Running Migrations & Data Seeding >>>>>> $white "
 docker exec ${APP_NAME}_php php artisan migrate
 docker exec ${APP_NAME}_php php artisan db:seed
 
-echo " $red <<<<<< Running PHPUnit Test >>>>>> $white "
+echo " $red <<<<<< Running All Test Cases >>>>>> $white "
 docker exec ${APP_NAME}_php ./vendor/bin/phpunit
 

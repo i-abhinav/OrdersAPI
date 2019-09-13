@@ -153,7 +153,7 @@ class OrderController extends Controller
  *   ),
  *   @OA\Response(response=400, description="BAD_REQUEST"),
  *   @OA\Response(response=409, description="CONFLICT_ORDER_ALREADY_TAKEN"),
- *   @OA\Response(response=422, description="INVALID_PARAMETERS")
+ *   @OA\Response(response=422, description="INVALID_PARAMETERS"),
  *   @OA\Response(response=405, description="METHOD_NOT_ALLOWED")
  *
  * )
@@ -186,43 +186,44 @@ class OrderController extends Controller
         return response()->json($response, $statusCode);
     }
 
-    /**
-     * @OA\Get(path="/orders?page=:page&limit=:limit",
-     *   tags={"Order List"},
-     *   summary="Return Order List",
-     *   description="Returns Order List data have order id, status, disatnce",
-     *   operationId="getOrderList",
-     *   parameters={},
-     *   @OA\Parameter(
-     *       name="page",
-     *       in="path",
-     *       description="Valid Page Number",
-     *       required=true,
-     *       @OA\Schema(
-     *           type="integer",
-     *           format="int64"
-     *       ),
-     *   @OA\Parameter(
-     *       name="limit",
-     *       in="path",
-     *       description="Valid Order Limit",
-     *       required=true,
-     *       @OA\Schema(
-     *           type="integer",
-     *           format="int64"
-     *       ),
-     *   @OA\Response(
-     *     response=200,
-     *     description="successful operation",
-     *     @OA\Schema(
-     *       additionalProperties={
-     *         "type":"integer",
-     *         "format":"int32"
-     *       }
-     *     )
-     *   ),
-     * )
-     */
+/**
+ * @OA\Get(path="/orders?page=:page&limit=:limit",
+ *   tags={"Order List"},
+ *   summary="Return Order List",
+ *   description="Returns Order List data have order id, status, disatnce",
+ *   operationId="getOrderList",
+ *   parameters={},
+ *   @OA\Parameter(
+ *       name="page",
+ *       in="query",
+ *       description="Valid Page Number",
+ *       required=true,
+ *       @OA\Schema(
+ *           type="integer",
+ *           format="int64"
+ *          )
+ *       ),
+ *   @OA\Parameter(
+ *       name="limit",
+ *       in="query",
+ *       description="Valid Order Limit",
+ *       required=true,
+ *       @OA\Schema(
+ *           type="integer",
+ *           format="int64"
+ *          )
+ *       ),
+ *   @OA\Response(
+ *     response=200,
+ *     description="successful operation",
+ *     @OA\Schema(ref="#/components/schemas/Order")
+ *   ),
+ *   @OA\Response(response=400, description="BAD_REQUEST"),
+ *   @OA\Response(response=422, description="INVALID_PARAMETERS"),
+ *   @OA\Response(response=405, description="METHOD_NOT_ALLOWED")
+ *
+ * )
+ */
 
 /**
  * Orders List
@@ -239,8 +240,8 @@ class OrderController extends Controller
             return response()->json(['error' => $validationResponse['errors']], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $limit = $request->get('limit');
-        $page = $request->get('page');
+        $limit = (int)$request->get('limit');
+        $page = (int)$request->get('page');
 
         $orders = $this->order->list($page, $limit);
         return response()->json($orders, JsonResponse::HTTP_OK);
