@@ -1,27 +1,25 @@
-version: "3.2"
+version: '3.5'
+
 services:
-  php:
+  myorders-app:
     build: 
       context: './docker-assets/php/'
-    networks:
-      - backend
-    volumes:
-      - ./src:/var/www/html/
+      args:
+        UID: ${UID}
+        WEB_USER: ${WEB_USER}
+        WEB_GROUP: ${WEB_GROUP}
     container_name: ${APP_NAME}_php
-  apache:
-    build:
-      context: './docker-assets/apache/'
-    depends_on:
-      - php
-      - mysql
-    networks:
-      - frontend
-      - backend
-    ports:
-      - "8080:80"
+    environment:
+      - APACHE_RUN_USER=#${UID}
+      - APACHE_RUN_GROUP=#${UID}
     volumes:
       - ./src:/var/www/html/
-    container_name: ${APP_NAME}_apache
+    ports:
+      - 8080:80
+    networks:
+      backend:
+        aliases:
+          - ${APP_NAME}_php
   mysql:
     image: mysql:5.7
     restart: always
@@ -29,17 +27,18 @@ services:
       - "3307:3306"
     dns_search: mysql
     volumes:
-      - data:/var/lib/mysql
-    networks:
-      - backend
+      - ./run/var:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     container_name: ${APP_NAME}_mysql
+    networks:
+      backend:
+        aliases:
+          - db
+
 networks:
-  frontend:
   backend:
-volumes:
-    data:
+    name: backend-network
