@@ -5,8 +5,7 @@ ARG WEB_GROUP
 ARG UID
 
 # 1. development packages
-RUN apt-get install -y \
-    curl
+RUN apt-get update -y && apt-get install -y git && apt-get install -y zip && apt-get install -y unzip
 
 # 2. apache configs + document root
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
