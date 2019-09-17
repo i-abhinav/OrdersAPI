@@ -33,3 +33,5 @@ RUN mv composer /usr/local/bin/
 RUN useradd -G $WEB_GROUP,root -u $UID -d /home/$WEB_USER $WEB_USER
 RUN mkdir -p /home/$WEB_USER/.composer && \
     chown -R $WEB_USER:$WEB_USER /home/$WEB_USER
+
+RUN chown -R $WEB_GROUP:$WEB_GROUP /var/www/html/
