@@ -35,4 +35,3 @@ RUN mkdir -p /home/$WEB_USER/.composer && \
     chown -R $WEB_USER:$WEB_USER /home/$WEB_USER
 
 RUN chown -R $WEB_GROUP:$WEB_GROUP /var/www/html/
-RUN chmod -R 755 /var/www/html/storage
