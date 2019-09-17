@@ -29,7 +29,7 @@ vendor_present() {
     echo "Dependencies updated"
   fi
 
-docker exec ${APP_NAME}_php chmod -R 755 /var/www/html/storage
+docker exec ${APP_NAME}_php chmod -R 777 /var/www/html/storage
 
 echo " $red <<<<<< Running Migrations & Data Seeding >>>>>> $white "
 docker exec ${APP_NAME}_php php artisan migrate
