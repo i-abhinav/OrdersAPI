@@ -1,4 +1,4 @@
-# Orders Managemnet API
+# Orders Management API
 This is REST API for creating a new order, updating a order and get order list.
 
 ## Tech Stack used...
